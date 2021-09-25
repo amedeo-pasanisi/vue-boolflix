@@ -1,7 +1,9 @@
 <template>
     <main id="cards">
-        <div class="container">
+        <div class= "container">
+            <h1 v-if= "cards == 'empty'">La ricerca non ha prodotto risultati</h1>
             <Card
+                v-else
                 v-for= "(card,index) in cards"
                 :key= "index"
                 :card= "card"
@@ -17,25 +19,7 @@ export default {
     components: {
         Card
     },
-    props: {
-        cards: Array
-    },
-    data() {
-        return {
-        }
-    },
-    // computed: {
-    //     filteredDischi () {
-    //         if (this.filter == "") {
-    //             return this.dischi
-    //         }
-    //         return this.dischi.filter(
-    //             (disco) => disco.genre == this.filter
-    //         );
-    //     }
-    // },
-    methods: {
-    }
+    props: ["cards", "query"]
 }
 </script>
 
@@ -50,6 +34,10 @@ export default {
             margin: auto;
             display: flex;
             flex-wrap: wrap;
+            justify-content: center;
+            h1 {
+                color: white;
+            }
         }
     }
 </style>

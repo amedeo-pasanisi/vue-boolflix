@@ -17,9 +17,6 @@ export default {
         return {
             query: ""
         }
-    },
-    props: {
-
     }
 }
 </script>
