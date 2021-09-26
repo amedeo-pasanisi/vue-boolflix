@@ -1,7 +1,12 @@
 <template>
   <div id="app">
-    <Header @query= "getApi" />
-    <Main :cards= "cards" :query= "query"/>
+    <Header @query= "trigger" />
+    <Main
+    :query= "query"
+    :totalResults= "totalResults"
+    :cards= "cards"
+    :loading= "loading"
+    />
   </div>
 </template>
 
@@ -19,32 +24,37 @@ export default {
     return {
       apiUrl: "https://api.themoviedb.org/3/search/movie",
       myApyKey: "c8d84c5c4b83aa407def8990d5ce320f",
-      query: "",
       lenguage: "it-IT",
-      cards: null // se la ricerca ha prodotto dei risultati, è un array che contiene gli oggetti "cards" (cioè i film)
+      query: "",
+      totalResults: null,
+      cards: [],
+      loading: false
     }
   },
   methods: {
-    takeQueryFromHeader(query) {
-      this.query = query
+    trigger(query) {
+      this.query = query;
+      this.getApiData();
     },
-    getApi(query) {
-      this.takeQueryFromHeader(query);
+    getApiData() {
       if (this.query != "") {
+        this.loading = true;
         axios
           .get (this.apiUrl + "?api_key=" + this.myApyKey + "&query=" + this.query + "&language=" + this.lenguage)
           .then ((result) => {
-            if (result.data.total_results != 0) {
+            this.totalResults = result.data.total_results;
+            if (this.totalResults != 0) {
               this.cards = result.data.results;
-            } else {
-              this.cards = "empty";
             }
+            this.loading = false;
           })
           .catch((errore) => {
             alert(errore);
           });
-      } else {
-        this.cards = null;
+      } else { // reset
+        this.loading = false;
+        this.totalResults = null;
+        this.cards= [];
       }
     }
   }

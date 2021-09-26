@@ -1,9 +1,9 @@
 <template>
     <main id="cards">
-        <div class= "container">
-            <h1 v-if= "cards == 'empty'">La ricerca non ha prodotto risultati</h1>
+        <Loader v-if= "loading == true" />
+        <h1 v-else-if= "totalResults == 0">La ricerca non ha prodotto risultati</h1>
+        <div v-else-if= "query !=''" class= "container">
             <Card
-                v-else
                 v-for= "(card,index) in cards"
                 :key= "index"
                 :card= "card"
@@ -14,12 +14,19 @@
 
 <script>
 import Card from "./Card"
+import Loader from "./Loader"
 export default {
     name: 'Main',
     components: {
-        Card
+        Card,
+        Loader
     },
-    props: ["cards", "query"]
+    props: {
+        cards: Array,
+        totalResults: Number,
+        query: String,
+        loading: Boolean
+    }
 }
 </script>
 
@@ -28,16 +35,15 @@ export default {
         min-height: 90%;
         background-color: #1E2D3B;
         padding: 60px 0;
+        h1 {
+            text-align: center;
+            color: white;
+        }
         .container {
-            width: 90%;
             height: 100%;
-            margin: auto;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            h1 {
-                color: white;
-            }
         }
     }
 </style>
