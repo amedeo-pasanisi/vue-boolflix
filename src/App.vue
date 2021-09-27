@@ -7,9 +7,8 @@
     :totalTVResults= "totalTVResults"
     :movieCards= "movieCards"
     :TVCards= "TVCards"
-    :loading= "loading"
-    :movieLoading = "movieLoading"
-    :TVLoading = "TVLoading"
+    :movieLoading= "movieLoading"
+    :TVLoading= "TVLoading"
     />
   </div>
 </template>
@@ -35,26 +34,19 @@ export default {
       totalTVResults: null,
       movieCards: [],
       TVCards: [],
-      loading: false,
       movieLoading: false,
       TVLoading: false
     }
   },
   methods: {
     trigger(query) {
-      // ???????????????????????????????
-      // const paramsObj = {
-      //   params: {
-      //     api_key: this.myApyKey,
-      //     query: query
-      //   }
-      // }
-      // ???????????????????????????????
       this.query = query;
       this.getApiData();
     },
     getApiData() {
       if (this.query != "") {        
+        this.movieLoading = true;
+        this.TVLoading = true;
         axios
           .get (this.apiMovieUrl + "?api_key=" + this.myApyKey + "&query=" + this.query + "&language=" + this.lenguage)
           .then ((response) => {
@@ -64,6 +56,9 @@ export default {
             } else {
               this.movieCards = [];
             }
+            setInterval(() => {
+              this.movieLoading = false;
+            }, 2000);
           })
           .catch((errore) => {
             alert(errore);
@@ -77,6 +72,7 @@ export default {
             } else {
               this.TVCards = [];
             }
+            this.TVLoading = false;
           })
           .catch((errore) => {
             alert(errore);

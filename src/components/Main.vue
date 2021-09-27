@@ -1,6 +1,6 @@
 <template>
     <main id="cards">
-        <Loader v-if= "loading == true" />
+        <Loader v-if= "movieLoading || TVLoading" />
         <div v-else-if= "query !=''" class= "container">
             <h4>Movies</h4>
             <ul class="movieContainer">
@@ -36,12 +36,13 @@ export default {
         Loader
     },
     props: {
-        loading: Boolean,
         query: String,
         movieCards: Array,
         TVCards: Array,
         totalMovieResults: Number,
-        totalTVResults: Number
+        totalTVResults: Number,
+        TVLoading: Boolean,
+        movieLoading: Boolean
     }
 }
 </script>
