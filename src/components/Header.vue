@@ -2,7 +2,7 @@
     <header>
         <h1>BOOLFLIX</h1>
         <div>
-            <input type="text" v-model= "query" placeholder="Film/Serie TV">
+            <input @keyup.enter= "$emit('query', query)" type="text" v-model= "query" placeholder="Film/Serie TV">
             <label for="text">
                 <button @click= "$emit('query', query)">Cerca</button>
             </label>

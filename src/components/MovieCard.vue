@@ -1,37 +1,33 @@
 <template>
-    <div id="card">
-        <h3>{{card.title}}</h3>
-        <div>{{card.original_title}}</div>
-        <div>{{card.original_language}}</div>
-        <div>{{card.vote_average}}</div>
-    </div>
+    <li id="movieCard">
+        <h3>{{movieCard.title}}</h3>
+        <div>{{movieCard.original_title}}</div>
+        <div>{{movieCard.original_language}}</div>
+        <div>{{movieCard.vote_average}}</div>
+    </li>
 </template>
 
 <script>
 export default {
-    name: "Card",
+    name: "MovieCard",
     props: {
-        card: Object
+        movieCard: Object
     }
 }
 </script>
 
 <style scoped lang="scss">
-    #card {
+    #movieCard {
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
-        width: calc(100% / 5 - 20px);
+        width: calc(100% / 5);
         min-height: 200px;
         border: 2px solid #1E2D3B;
         padding: 10px;
         background-color: #424c55;
         color: white;
-        // img {
-        //     width: 100%;
-        //     margin-bottom: 10px;
-        // }
         &>* {
             margin-bottom: 20px;
         }

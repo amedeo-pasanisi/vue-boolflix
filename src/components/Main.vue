@@ -1,31 +1,47 @@
 <template>
     <main id="cards">
         <Loader v-if= "loading == true" />
-        <h1 v-else-if= "totalResults == 0">La ricerca non ha prodotto risultati</h1>
         <div v-else-if= "query !=''" class= "container">
-            <Card
-                v-for= "(card,index) in cards"
-                :key= "index"
-                :card= "card"
-            />
+            <h4>Movies</h4>
+            <ul class="movieContainer">
+                <h1 v-if= "totalMovieResults == 0">La ricerca non ha prodotto risultati</h1>
+                <MovieCard
+                    v-for= "(movieCard,index) in movieCards"
+                    :key= "index"
+                    :movieCard= "movieCard"
+                />
+            </ul>
+            <h4>TV series</h4>
+            <ul class="TVContainer">
+                <h1 v-if= "totalTVResults == 0">La ricerca non ha prodotto risultati</h1>
+                <TVCard
+                    v-for= "(TVCard,index) in TVCards"
+                    :key= "index"
+                    :TVCard= "TVCard"
+                />
+            </ul>
         </div>
     </main>
 </template>
 
 <script>
-import Card from "./Card"
+import MovieCard from "./MovieCard"
+import TVCard from "./TVCard"
 import Loader from "./Loader"
 export default {
     name: 'Main',
     components: {
-        Card,
+        MovieCard,
+        TVCard,
         Loader
     },
     props: {
-        cards: Array,
-        totalResults: Number,
+        loading: Boolean,
         query: String,
-        loading: Boolean
+        movieCards: Array,
+        TVCards: Array,
+        totalMovieResults: Number,
+        totalTVResults: Number
     }
 }
 </script>
@@ -39,11 +55,17 @@ export default {
             text-align: center;
             color: white;
         }
-        .container {
-            height: 100%;
+        .movieContainer {
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
+            margin: 20px 0;
+            list-style: none;
+        }
+        .TVContainer {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            list-style: none;
         }
     }
 </style>

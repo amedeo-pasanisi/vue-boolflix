@@ -3,9 +3,13 @@
     <Header @query= "trigger" />
     <Main
     :query= "query"
-    :totalResults= "totalResults"
-    :cards= "cards"
+    :totalMovieResults= "totalMovieResults"
+    :totalTVResults= "totalTVResults"
+    :movieCards= "movieCards"
+    :TVCards= "TVCards"
     :loading= "loading"
+    :movieLoading = "movieLoading"
+    :TVLoading = "TVLoading"
     />
   </div>
 </template>
@@ -22,39 +26,67 @@ export default {
   },
   data () {
     return {
-      apiUrl: "https://api.themoviedb.org/3/search/movie",
+      apiMovieUrl: "https://api.themoviedb.org/3/search/movie",
+      apiTVUrl: "https://api.themoviedb.org/3/search/tv",
       myApyKey: "c8d84c5c4b83aa407def8990d5ce320f",
       lenguage: "it-IT",
       query: "",
-      totalResults: null,
-      cards: [],
-      loading: false
+      totalMovieResults: null,
+      totalTVResults: null,
+      movieCards: [],
+      TVCards: [],
+      loading: false,
+      movieLoading: false,
+      TVLoading: false
     }
   },
   methods: {
     trigger(query) {
+      // ???????????????????????????????
+      // const paramsObj = {
+      //   params: {
+      //     api_key: this.myApyKey,
+      //     query: query
+      //   }
+      // }
+      // ???????????????????????????????
       this.query = query;
       this.getApiData();
     },
     getApiData() {
-      if (this.query != "") {
-        this.loading = true;
+      if (this.query != "") {        
         axios
-          .get (this.apiUrl + "?api_key=" + this.myApyKey + "&query=" + this.query + "&language=" + this.lenguage)
-          .then ((result) => {
-            this.totalResults = result.data.total_results;
-            if (this.totalResults != 0) {
-              this.cards = result.data.results;
+          .get (this.apiMovieUrl + "?api_key=" + this.myApyKey + "&query=" + this.query + "&language=" + this.lenguage)
+          .then ((response) => {
+            this.totalMovieResults = response.data.total_results;
+            if (this.totalMovieResults != 0) {
+              this.movieCards = response.data.results;
+            } else {
+              this.movieCards = [];
             }
-            this.loading = false;
+          })
+          .catch((errore) => {
+            alert(errore);
+          });
+        axios
+          .get (this.apiTVUrl + "?api_key=" + this.myApyKey + "&query=" + this.query + "&language=" + this.lenguage)
+          .then ((response) => {
+            this.totalTVResults = response.data.total_results;
+            if (this.totalTVResults != 0) {
+              this.TVCards = response.data.results;
+            } else {
+              this.TVCards = [];
+            }
           })
           .catch((errore) => {
             alert(errore);
           });
       } else { // reset
         this.loading = false;
-        this.totalResults = null;
-        this.cards= [];
+        this.totalMovieResults = null;
+        this.totalTVResults = null;
+        this.movieCards= [];
+        this.TVCards= [];
       }
     }
   }
