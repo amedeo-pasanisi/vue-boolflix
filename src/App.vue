@@ -30,10 +30,10 @@ export default {
       myApyKey: "c8d84c5c4b83aa407def8990d5ce320f",
       lenguage: "it-IT",
       query: "",
-      totalMovieResults: null,
-      totalTVResults: null,
       movieCards: [],
       TVCards: [],
+      totalMovieResults: null,
+      totalTVResults: null,
       movieLoading: false,
       TVLoading: false
     }
@@ -56,9 +56,8 @@ export default {
             } else {
               this.movieCards = [];
             }
-            setInterval(() => {
-              this.movieLoading = false;
-            }, 2000);
+            // setInterval(() => {}, 2000);
+            this.movieLoading = false;
           })
           .catch((errore) => {
             alert(errore);
@@ -78,7 +77,8 @@ export default {
             alert(errore);
           });
       } else { // reset
-        this.loading = false;
+        this.movieLoading = false;
+        this.TVLoading = false;
         this.totalMovieResults = null;
         this.totalTVResults = null;
         this.movieCards= [];
@@ -90,6 +90,7 @@ export default {
 </script>
 
 <style lang="scss">
+  @import '~@fortawesome/fontawesome-free/css/all.min.css';
   * {
     margin: 0;
     padding: 0;

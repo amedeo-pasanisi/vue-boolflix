@@ -3,21 +3,21 @@
         <Loader v-if= "movieLoading || TVLoading" />
         <div v-else-if= "query !=''" class= "container">
             <h4>Movies</h4>
+            <h1 v-if= "totalMovieResults == 0">La ricerca non ha prodotto risultati</h1>
             <ul class="movieContainer">
-                <h1 v-if= "totalMovieResults == 0">La ricerca non ha prodotto risultati</h1>
-                <MovieCard
-                    v-for= "(movieCard,index) in movieCards"
-                    :key= "index"
-                    :movieCard= "movieCard"
+                <Card
+                    v-for= "card in movieCards"
+                    :key= "card.id"
+                    :card= "card"
                 />
             </ul>
             <h4>TV series</h4>
+            <h1 v-if= "totalTVResults == 0">La ricerca non ha prodotto risultati</h1>
             <ul class="TVContainer">
-                <h1 v-if= "totalTVResults == 0">La ricerca non ha prodotto risultati</h1>
-                <TVCard
-                    v-for= "(TVCard,index) in TVCards"
-                    :key= "index"
-                    :TVCard= "TVCard"
+                <Card
+                    v-for= "card in TVCards"
+                    :key= "card.id"
+                    :card= "card"
                 />
             </ul>
         </div>
@@ -25,14 +25,12 @@
 </template>
 
 <script>
-import MovieCard from "./MovieCard"
-import TVCard from "./TVCard"
+import Card from "./Card"
 import Loader from "./Loader"
 export default {
     name: 'Main',
     components: {
-        MovieCard,
-        TVCard,
+        Card,
         Loader
     },
     props: {
@@ -52,9 +50,10 @@ export default {
         min-height: 90%;
         background-color: #1E2D3B;
         padding: 60px 0;
-        h1 {
+        h1, h4 {
             text-align: center;
             color: white;
+            margin: 10px 0;
         }
         .movieContainer {
             display: flex;
